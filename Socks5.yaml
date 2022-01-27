@@ -1,0 +1,17 @@
+proxies:
+
+  - name: "✴️ Atha"
+    type: socks5
+    server: sg-socks5.woiden.net
+    port: 8080
+    username: woiden_hjkkhh
+    password: hhjjj
+    udp: true
+
+  - name: "🧬 Hurricane Electric"
+    type: socks5
+    server: sg2-socks5.woiden.net
+    port: 8080
+    username: woiden_saya5hjj
+    password: ghjk
+    udp: true

@@ -1,0 +1,21 @@
+proxies:
+
+  - name : "🎉 Indo"
+    type: ssr
+    server: sg1socks.ipservers.xyz 
+    port: 1443 
+    cipher: AES-256-CFB 
+    password: ZAsBhxy8LN 
+    obfs: plain 
+    protocol: origin 
+    udp: true
+   
+  - name : "⚡ Singa"
+    type: ssr
+    server: idsocks.ipservers.xyz 
+    port: 1443 
+    cipher: AES-256-CFB 
+    password: RFjl3Bv5KM 
+    obfs: plain 
+    protocol: origin 
+    udp: true

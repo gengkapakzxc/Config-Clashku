@@ -1,0 +1,88 @@
+proxies:
+
+  - name: "🏆 Biznet Jakarta"
+    type: trojan
+    server: 104.18.25.139
+    port: 443
+    password: ff27d4a6-0768-40dc-8a33-13a7f130d95d
+    udp: true
+    network: ws
+    ws-opts:
+      path: /trojan-ws
+      headers:
+        Host: sgdo01-03-trojan-go.darktunnel.net
+    sni: sgdo01-03-trojan-go.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "🏅 Biznet Banten"
+    type: trojan
+    server: 104.16.65.85
+    port: 443
+    password: ff27d4a6-0768-40dc-8a33-13a7f130d95d
+    udp: true
+    network: ws
+    ws-opts:
+      path: /trojan-ws
+      headers:
+        Host: sgdo01-03-trojan-go.darktunnel.net
+    sni: sgdo01-03-trojan-go.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "🎖️ Berkah Solusi"
+    type: trojan
+    server: midtrans.com
+    port: 443
+    password: bad83b50-7c59-11ec-903f-1239d0255272
+    network: ws
+    ws-opts:
+      path: /howdy
+      headers:
+        Host: sg8-trojan.bonds.id
+    sni: sg8-trojan.bonds.id
+    skip-cert-verify: true
+
+  - name: "☀️ Qwords"
+    type: trojan
+    server: 104.16.65.85
+    port: 443
+    password: d34de96c-545e-4d77-88a2-36aff2b4fc93
+    udp: true
+    network: grpc
+    grpc-opts:
+      grpc-service-name: trojan-grpc
+    sni: sgdo02-07-xray-trojan.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "⚡ Nusanet"
+    type: trojan
+    server: midtrans.com
+    port: 443
+    password: bad83b50-7c59-11ec-903f-1239d0255272
+    network: ws
+    ws-opts:
+      path: /howdy
+      headers:
+        Host: sg8-trojan.bonds.id
+    sni: sg8-trojan.bonds.id
+    skip-cert-verify: true
+
+  - name: "🌼 Hurricane Electric"
+    type: trojan
+    server: 104.16.65.85
+    port: 443
+    password: 04a1c7a0-5ec8-40c3-a95c-750feb5c8c3b
+    udp: true
+    network: grpc
+    grpc-opts:
+      grpc-service-name: trojan-grpc
+    sni: sgdo02-07-xray-trojan.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "🌱 Vultr"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
