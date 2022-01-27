@@ -1,0 +1,161 @@
+port: 8989
+socks-port: 1080
+mixed-port: 9090
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  ipv6: false
+  listen: 53
+  default-nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+  enhanced-mode: fake-ip
+  fake-ip-range: 100.0.0.1/10 # or 198.18.0.1/16
+  nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+    - http://cp.cloudflare.com/dns-query
+    - tls://1.1.1.1:853
+    - dhcp://en0
+  fallback:
+  fallback-filter:
+    geoip: true
+    geoip-code: ID
+    ipcidr:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+tun:
+  enable: true
+  stack: system 
+  macOS-auto-route: true
+  macOS-auto-detect-interface: true
+  dns-hijack:
+    - tcp://1.1.1.1:53
+experimental:
+  interface-name: en0
+      
+proxy-groups:
+  - name: Vmess
+    type: select
+    use:
+    - Vmess
+    
+  - name: Trojan
+    type: select
+    use:
+    - Trojan
+    
+  - name: AllProxy
+    type: select
+    use:
+    - Vmess
+    - Trojan
+    
+  - name: Auto All Proxy
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - Vmess
+    - Trojan
+    
+  - name: Auto Vmess 
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - Vmess
+    
+  - name: Auto Trojan
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - Trojan
+    
+  - name: Load Balance All Proxy
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - Vmess
+    - Trojan
+    
+  - name: Load Balance Vmess
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - Vmess
+    
+  - name: Load Balance Trojan
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - Trojan
+
+proxy-providers:
+  Vmess:
+    type: file
+    path: ./Vmess.yaml
+    health-check:
+      enable: true
+      interval: 60
+      lazy: false
+      url: 'http://cp.cloudflare.com/'
+      
+  Trojan:
+    type: file
+    path: ./Trojan.yaml
+    health-check:
+      enable: true
+      interval: 60
+      lazy: false
+      url: 'http://cp.cloudflare.com/'
+      
+
+rule-providers:
+  streaming:
+    behavior: classical
+    type: file
+    path: ./streaming.yaml
+    
+  sosmed:
+    behavior: classical
+    type: file
+    path: ./sosmed.yaml
+    
+  rule_tiktok:
+    behavior: domain
+    type: file
+    path: ./rule_tiktok.yaml
+    
+rules:
+  - RULE-SET,streaming,Vmess
+  - RULE-SET,sosmed,Trojan
+  - RULE-SET,rule_tiktok,DIRECT
+  - MATCH,Auto All Proxy
+   
