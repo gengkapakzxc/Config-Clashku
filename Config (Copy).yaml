@@ -1,0 +1,473 @@
+port: 8989
+socks-port: 1080
+mixed-port: 9090
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  ipv6: false
+  listen: 53
+  default-nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+  enhanced-mode: fake-ip
+  fake-ip-range: 100.0.0.1/10 # or 198.18.0.1/16
+  nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+    - https://dns.google/dns-query
+    - tls://dns.google:853
+    - dhcp://en0
+  fallback:
+  fallback-filter:
+    geoip: true
+    geoip-code: ID
+    ipcidr:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+
+proxies:
+                ## Trojan ##
+
+  - name: "🏆 Biznet Jakarta"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🏅 Biznet Banten"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🎖️ Berkah Solusi"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "☀️ Qwords"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "⚡ Nusanet"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🌼 Hurricane Electric"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🌱 Vultr"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🥇 SG.GS"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🪵 M247"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "⚪ Trojan Unli 1"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "⚫ Trojan Unli 2"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🟤 Trojan Unli 3"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+                ## Shadowsocks OBFS ##
+
+  - name: 🌺 Argon
+    server: login.spotify.com.ovhmelon.kolocokro.xyz
+    port: 8090
+    type: ss
+    cipher: aes-256-gcm
+    password: password
+    plugin: obfs
+    plugin-opts:
+      mode: tls
+      host: bug.com
+
+  - name: 💐 Raja Mitra
+    server: log.spotify.com.m247melon.kolocokro.xyz
+    port: 8091
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+    udp : true
+
+  - name: 🌷 Contabo
+    server: log.spotify.com.ovhmelon.kolocokro.xyz
+    port: 8091
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+    udp : true
+    
+  - name: 💮 OVH 1
+    server: login.spotify.com.ovhmelon.kolocokro.xyz
+    port: 8090
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+    udp : true
+    
+  - name: 🏵️ OVH 2
+    server: server
+    port: 8443
+    type: ss
+    cipher: aes-256-gcm
+    password: password
+    plugin: obfs
+    plugin-opts:
+      mode: tls
+      host: bug.com
+
+                ## Socks5 ##
+
+  - name: "✴️ Atha"
+    type: socks5
+    server: bug.com.server
+    port: 443
+    username: user
+    password: pass
+    tls: true
+    skip-cert-verify: true
+    udp: true
+
+  - name: "🧬 Hurricane Electric"
+    type: socks5
+    server: bug.com.server
+    port: 443
+    username: user
+    password: pass
+    tls: true
+    skip-cert-verify: true
+    udp: true
+
+
+proxy-groups:
+  - name: 💠 Proxy
+    type: select
+    proxies:
+      - 🌀 Trojan
+      - ⛑️ Shadowsocks OBFS
+      - 🔗 Socks5
+      - 🌠 Auto All Proxy
+      - 🌟 Load Balance All Proxy
+      - 🌀 Auto Trojan
+      - ⛑️ Auto Shadowsocks OBFS
+      - 🔗 Auto Socks5
+      - 🌀 Load Balance Trojan
+      - ⛑️ Load Balance Shadowsocks OBFS
+      - 🔗 Load Balance Socks5
+      
+  - name: 🌀 Trojan
+    type: select
+    proxies:
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+
+  - name: "⛑️ Shadowsocks OBFS"
+    type: select
+    proxies:
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+
+  - name: "🔗 Socks5"
+    type: select
+    proxies:
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+
+  - name: "🌠 Auto All Proxy"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+
+  - name: "🌟 Load Balance All Proxy"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+
+  - name: "🌀 Auto Trojan"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+
+  - name: "⛑️ Auto Shadowsocks OBFS"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+
+  - name: "🔗 Auto Socks5"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+
+  - name: "🌀 Load Balance Trojan"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+
+  - name: "⛑️ Load Balance Shadowsocks OBFS"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+
+  - name: "🔗 Load Balance Socks5"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+
+rule-providers:
+  streaming:
+    type: http
+    behavior: classical
+    path: /streaming.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/streaming.yaml
+
+  sosmed:
+    type: http
+    behavior: classical
+    path: /sosmed.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/sosmed.yaml
+    
+  rule_tiktok:
+    type: http
+    behavior: domain
+    path: /rule_tiktok.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/rule_tiktok.yaml
+
+rules:
+  - RULE-SET,streaming,DIRECT
+  - RULE-SET,sosmed,DIRECT
+  - RULE-SET,rule_tiktok,DIRECT
+  - MATCH,💠 Proxy
+
+
+
+
+## Trojan
+      #- 🏆 Biznet Jakarta
+      #- 🏅 Biznet Banten
+      #- 🎖️ Berkah Solusi
+      #- ☀️ Qwords
+      #- ⚡ Nusanet
+      #- 🌼 Hurricane Electric
+      #- 🌱 Vultr
+      #- 🥇 SG.GS
+      #- 🪵 M247
+      #- ⚪ Trojan Unli 1
+      #- ⚫ Trojan Unli 2
+      #- 🟤 Trojan Unli 3
+## Shadowsocks OBFS
+      #- 🌺 Argon
+      #- 💐 Raja Mitra
+      #- 🌷 Contabo
+      #- 💮 OVH 1
+      #- 🏵️ OVH 2
+## Socks5
+      #- ✴️ Atha
+      #- 🧬 Hurricane Electric
