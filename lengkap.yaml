@@ -1,0 +1,751 @@
+port: 8989
+socks-port: 1080
+mixed-port: 9090
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  ipv6: false
+  listen: 53
+  default-nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+  enhanced-mode: fake-ip
+  fake-ip-range: 100.0.0.1/10 # or 198.18.0.1/16
+  nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+    - https://dns.google/dns-query
+    - tls://dns.google:53
+    - dhcp://en0
+  fallback:
+  fallback-filter:
+    geoip: true
+    geoip-code: ID
+    ipcidr:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+
+proxies:
+                ## Vmess ##
+  - name: "🛰️ Digital Ocean 1"
+    type: vmess
+    server: udemy.com
+    port: 443
+    uuid: 4d1c7655-4808-4d18-a76d-35d73ae21797
+    alterId: 0
+    cipher: auto
+    udp: true
+    network: grpc
+    grpc-opts:
+      grpc-service-name: vmess-grpc
+    tls: true
+    servername: sgdo03-07-v2ray-vmess.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "☣️ Digital Ocean 2"
+    type: vmess
+    server: midtrans.com
+    port: 443
+    uuid: 124a659b-1a5b-4c6b-b95e-12318a69a588
+    alterId: 0
+    cipher: auto
+    udp: true
+    network: grpc
+    grpc-opts:
+      grpc-service-name: vmess-grpc
+    tls: true
+    servername: sgdo02-07-v2ray-vmess.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "🌙 OVH"
+    type: vmess
+    server: 104.17.2.81
+    port: 80
+    uuid: 8758af60-5d02-41e7-813b-f7661dba9403
+    alterId: 0
+    cipher: auto
+    udp: true
+    network: ws
+    ws-opts:
+      path: /vmess-ws
+      headers:
+        Host: sgdo02-07-v2ray-vmess.darktunnel.net
+    tls: false
+
+  - name: "🧁 Psychz"
+    type: vmess
+    server: 104.16.65.85
+    port: 443
+    uuid: b4aab69a-acfe-4528-868d-93d827df7abc
+    alterId: 0
+    cipher: auto
+    udp: true
+    tls: true
+    skip-cert-verify: true
+    sni: sg2ray.serverssh.net
+    network: ws
+    ws-opts:
+      path: /serverssh.net
+      headers:
+        Host: sg2ray.serverssh.net
+
+  - name: "☢️ Biznet"
+    type: vmess
+    server: udemy.com
+    port: 443
+    uuid: b4aab69a-acfe-4528-868d-93d827df7abc
+    alterId: 0
+    cipher: auto
+    udp: true
+    tls: true
+    skip-cert-verify: true
+    sni: sg2ray.serverssh.net
+    network: ws
+    ws-opts:
+      path: /serverssh.net
+      headers:
+        Host: sg2ray.serverssh.net
+
+  - name: "🎉 Nusanet"
+    type: vmess
+    server: 104.16.65.85
+    port: 443
+    uuid: 3351581d-99d2-448d-919c-c4f28a0be66c
+    alterId: 0
+    cipher: auto
+    udp: true
+    network: grpc
+    grpc-opts:
+      grpc-service-name: vmess-grpc
+    tls: true
+    servername: sgdo03-07-v2ray-vmess.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "🎊 Raja Mitra"
+    type: vmess
+    server: server
+    port: 443
+    uuid: 0767103e-5d92-400e-8935-0d4b40e59b99
+    alterId: 64
+    cipher: auto
+    udp: true
+    tls: true
+    skip-cert-verify: true
+    sni: bug.com
+    network: ws
+    ws-opts:
+      path: /serverssh.net
+      headers:
+        Host: sg2ray.serverssh.net
+
+  - name: "🎈 Apik Media"
+    type: vmess
+    server: server
+    port: 443
+    uuid: 0767103e-5d92-400e-8935-0d4b40e59b99
+    alterId: 64
+    cipher: auto
+    udp: true
+    tls: true
+    skip-cert-verify: true
+    sni: bug.com
+    network: ws
+    ws-opts:
+      path: /serverssh.net
+      headers:
+        Host: sg2ray.serverssh.net
+
+  - name: "🎂 Industri Kreatif"
+    type: vmess
+    server: server
+    port: 443
+    uuid: 0767103e-5d92-400e-8935-0d4b40e59b99
+    alterId: 64
+    cipher: auto
+    udp: true
+    tls: true
+    skip-cert-verify: true
+    sni: bug.com
+    network: ws
+    ws-opts:
+      path: /serverssh.net
+      headers:
+        Host: sg2ray.serverssh.net
+
+                ## Trojan ##
+
+  - name: "🏆 Biznet Jakarta"
+    type: trojan
+    server: 104.18.25.139
+    port: 443
+    password: ff27d4a6-0768-40dc-8a33-13a7f130d95d
+    udp: true
+    network: ws
+    ws-opts:
+      path: /trojan-ws
+      headers:
+        Host: sgdo01-03-trojan-go.darktunnel.net
+    sni: sgdo01-03-trojan-go.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "🏅 Biznet Banten"
+    type: trojan
+    server: 104.16.65.85
+    port: 443
+    password: ff27d4a6-0768-40dc-8a33-13a7f130d95d
+    udp: true
+    network: ws
+    ws-opts:
+      path: /trojan-ws
+      headers:
+        Host: sgdo01-03-trojan-go.darktunnel.net
+    sni: sgdo01-03-trojan-go.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "🎖️ Berkah Solusi"
+    type: trojan
+    server: midtrans.com
+    port: 443
+    password: bad83b50-7c59-11ec-903f-1239d0255272
+    network: ws
+    ws-opts:
+      path: /howdy
+      headers:
+        Host: sg8-trojan.bonds.id
+    sni: sg8-trojan.bonds.id
+    skip-cert-verify: true
+
+  - name: "☀️ Qwords"
+    type: trojan
+    server: udemy.com
+    port: 443
+    password: b49659d0-7bff-11ec-b238-225401db9d57
+    udp: true
+    network: ws
+    ws-opts:
+      path: /fastssh
+      headers:
+        Host: sg-ovh.tjvpn.org
+    sni: sg-ovh.tjvpn.org
+    skip-cert-verify: true
+
+  - name: "⚡ Nusanet"
+    type: trojan
+    server: midtrans.com
+    port: 443
+    password: bad83b50-7c59-11ec-903f-1239d0255272
+    network: ws
+    ws-opts:
+      path: /howdy
+      headers:
+        Host: sg8-trojan.bonds.id
+    sni: sg8-trojan.bonds.id
+    skip-cert-verify: true
+
+  - name: "🌼 Hurricane Electric"
+    type: trojan
+    server: 104.16.65.85
+    port: 443
+    password: 04a1c7a0-5ec8-40c3-a95c-750feb5c8c3b
+    udp: true
+    network: grpc
+    grpc-opts:
+      grpc-service-name: trojan-grpc
+    sni: sgdo02-07-xray-trojan.darktunnel.net
+    skip-cert-verify: true
+
+  - name: "🌱 Vultr"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🥇 SG.GS"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🪵 M247"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "⚪ Trojan Unli 1"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "⚫ Trojan Unli 2"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+  - name: "🟤 Trojan Unli 3"
+    type: trojan
+    server: server
+    port: 443
+    password: password
+    udp: true
+    sni: bug.com
+    skip-cert-verify: true
+
+                ## Shadowsocks OBFS ##
+
+  - name: 🌺 Argon
+    server: server
+    port: 8443
+    type: ss
+    cipher: aes-256-gcm
+    password: password
+    plugin: obfs
+    plugin-opts:
+      mode: tls
+      host: bug.com
+
+  - name: 💐 Raja Mitra
+    server: log.spotify.com.m247melon.kolocokro.xyz
+    port: 8091
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+    udp : true
+
+  - name: 🌷 Contabo
+    server: log.spotify.com.ovhmelon.kolocokro.xyz
+    port: 8091
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+    udp : true
+    
+  - name: 💮 OVH 1
+    server: login.spotify.com.ovhmelon.kolocokro.xyz
+    port: 8090
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+    udp : true
+
+  - name: 🏵️ OVH 2
+    server: server
+    port: 8443
+    type: ss
+    cipher: aes-256-gcm
+    password: password
+    plugin: obfs
+    plugin-opts:
+      mode: tls
+      host: bug.com
+
+                ## Socks5 ##
+
+  - name: "✴️ Atha"
+    type: socks5
+    server: sg-socks5.woiden.net
+    port: 8080
+    username: woiden_hjkkhh
+    password: hhjjj
+    udp: true
+
+  - name: "🧬 Hurricane Electric"
+    type: socks5
+    server: sg2-socks5.woiden.net
+    port: 8080
+    username: woiden_saya5hjj
+    password: ghjk
+    udp: true
+
+               ## SSR ##
+
+  - name : "🎉 Indo"
+    type: ssr
+    server: sg1socks.ipservers.xyz 
+    port: 1443 
+    cipher: AES-256-CFB 
+    password: ZAsBhxy8LN 
+    obfs: plain 
+    protocol: origin 
+    udp: true
+   
+  - name : "⚡ Singa"
+    type: ssr
+    server: idsocks.ipservers.xyz 
+    port: 1443 
+    cipher: AES-256-CFB 
+    password: RFjl3Bv5KM 
+    obfs: plain 
+    protocol: origin 
+    udp: true
+
+proxy-groups:
+  - name: 💠 Proxy
+    type: select
+    proxies:
+      - 🌸 V2ray
+      - 🌀 Trojan
+      - ⛑️ Shadowsocks OBFS
+      - 🔗 Socks5
+      - ⭐ SSR
+      - 🌠 Auto All Proxy
+      - 🌟 Load Balance All Proxy
+      - 🌸 Auto V2ray
+      - 🌀 Auto Trojan
+      - ⛑️ Auto Shadowsocks OBFS
+      - 🔗 Auto Socks5
+      - ⭐ Auto SSR
+      - 🌸 Load Balance V2ray
+      - 🌀 Load Balance Trojan
+      - ⛑️ Load Balance Shadowsocks OBFS
+      - 🔗 Load Balance Socks5
+      - ⭐ Load Balance SSR
+
+  - name: 🌸 V2ray
+    type: select
+    proxies:
+## Vmess
+      - 🛰️ Digital Ocean 1
+      - ☣️ Digital Ocean 2
+      - 🌙 OVH
+      - 🧁 Psychz
+      - ☢️ Biznet
+      - 🎉 Nusanet
+      - 🎊 Raja Mitra
+      - 🎈 Apik Media
+      - 🎂 Industri Kreatif
+
+  - name: 🌀 Trojan
+    type: select
+    proxies:
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+
+  - name: "⛑️ Shadowsocks OBFS"
+    type: select
+    proxies:
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+
+  - name: "🔗 Socks5"
+    type: select
+    proxies:
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+
+  - name: "⭐ SSR"
+    type: select
+    proxies:
+## SSR
+      - 🎉 Indo
+      - ⚡ Singa
+
+  - name: "🌠 Auto All Proxy"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Vmess
+      - 🛰️ Digital Ocean 1
+      - ☣️ Digital Ocean 2
+      - 🌙 OVH
+      - 🧁 Psychz
+      - ☢️ Biznet
+      - 🎉 Nusanet
+      - 🎊 Raja Mitra
+      - 🎈 Apik Media
+      - 🎂 Industri Kreatif
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+## SSR
+      - 🎉 Indo
+      - ⚡ Singa
+
+  - name: "🌟 Load Balance All Proxy"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Vmess
+      - 🛰️ Digital Ocean 1
+      - ☣️ Digital Ocean 2
+      - 🌙 OVH
+      - 🧁 Psychz
+      - ☢️ Biznet
+      - 🎉 Nusanet
+      - 🎊 Raja Mitra
+      - 🎈 Apik Media
+      - 🎂 Industri Kreatif
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+## SSR
+      - 🎉 Indo
+      - ⚡ Singa
+
+  - name: "🌸 Auto V2ray"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Vmess
+      - 🛰️ Digital Ocean 1
+      - ☣️ Digital Ocean 2
+      - 🌙 OVH
+      - 🧁 Psychz
+      - ☢️ Biznet
+      - 🎉 Nusanet
+      - 🎊 Raja Mitra
+      - 🎈 Apik Media
+      - 🎂 Industri Kreatif
+
+  - name: "🌀 Auto Trojan"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+
+  - name: "⛑️ Auto Shadowsocks OBFS"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+
+  - name: "🔗 Auto Socks5"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+
+  - name: "⭐ Auto SSR"
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    proxies:
+## SSR
+      - 🎉 Indo
+      - ⚡ Singa
+
+  - name: "🌸 Load Balance V2ray"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Vmess
+      - 🛰️ Digital Ocean 1
+      - ☣️ Digital Ocean 2
+      - 🌙 OVH
+      - 🧁 Psychz
+      - ☢️ Biznet
+      - 🎉 Nusanet
+      - 🎊 Raja Mitra
+      - 🎈 Apik Media
+      - 🎂 Industri Kreatif
+
+  - name: "🌀 Load Balance Trojan"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Trojan
+      - 🏆 Biznet Jakarta
+      - 🏅 Biznet Banten
+      - 🎖️ Berkah Solusi
+      - ☀️ Qwords
+      - ⚡ Nusanet
+      - 🌼 Hurricane Electric
+      - 🌱 Vultr
+      - 🥇 SG.GS
+      - 🪵 M247
+      - ⚪ Trojan Unli 1
+      - ⚫ Trojan Unli 2
+      - 🟤 Trojan Unli 3
+
+  - name: "⛑️ Load Balance Shadowsocks OBFS"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Shadowsocks OBFS
+      - 🌺 Argon
+      - 💐 Raja Mitra
+      - 🌷 Contabo
+      - 💮 OVH 1
+      - 🏵️ OVH 2
+
+  - name: "🔗 Load Balance Socks5"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## Socks5
+      - ✴️ Atha
+      - 🧬 Hurricane Electric
+
+  - name: "⭐ Load Balance SSR"
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    proxies:
+## SSR
+      - 🎉 Indo
+      - ⚡ Singa
+
+rule-providers:
+  streaming:
+    type: http
+    behavior: classical
+    path: /streaming.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/streaming.yaml
+
+  sosmed:
+    type: http
+    behavior: classical
+    path: /sosmed.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/sosmed.yaml
+    
+  rule_tiktok:
+    type: http
+    behavior: domain
+    path: /rule_tiktok.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/rule_tiktok.yaml
+
+rules:
+  - RULE-SET,streaming,🌸 V2ray
+  - RULE-SET,sosmed,🌀 Trojan
+  - RULE-SET,rule_tiktok,DIRECT
+  - MATCH,💠 Proxy
