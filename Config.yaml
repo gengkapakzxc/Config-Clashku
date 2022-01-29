@@ -1,0 +1,202 @@
+port: 8989
+socks-port: 1080
+mixed-port: 9090
+unified-delay: true
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  ipv6: false
+  listen: 53
+  default-nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+  enhanced-mode: fake-ip
+  fake-ip-range: 100.0.0.1/10 # or 198.18.0.1/16
+  nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+    - http://cp.cloudflare.com/dns-query
+    - tls://1.1.1.1:853
+    - dhcp://en0
+  fallback:
+  fallback-filter:
+    geoip: true
+    geoip-code: ID
+    ipcidr:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+tun:
+  enable: true
+  stack: system 
+  macOS-auto-route: true
+  macOS-auto-detect-interface: true
+  dns-hijack:
+    - tcp://1.1.1.1:53
+experimental:
+  interface-name: en0
+      
+proxy-groups:
+  - name: SosialMedia
+    type: select
+    use:
+    - Vmess
+    
+  - name: Download
+    type: select
+    use:
+    - Trojan
+    
+  - name: Streaming
+    type: select
+    use:
+    - Shadowsocks
+    
+  - name: AllProxy
+    type: select
+    use:
+    - Vmess
+    - Trojan
+    - Shadowsocks
+    
+  - name: Auto All Proxy
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - Vmess
+    - Trojan
+    - Shadowsocks
+    
+  - name: Auto SosialMedia 
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - Vmess
+    
+  - name: Auto Download
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - Trojan
+    
+  - name: Auto Streaming
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - Shadowsocks
+      
+  - name: Load Balance All Proxy
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - Vmess
+    - Trojan
+    - Shadowsocks
+     
+  - name: Load Balance SosialMedia
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - Vmess
+    
+  - name: Load Balance Download
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - Trojan
+    
+  - name: Load Balance Streaming
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - Shadowsocks
+
+proxy-providers:
+  Vmess:
+    type: file
+    path: ./Vmess.yaml
+    health-check:
+      enable: true
+      interval: 60
+      lazy: false
+      url: 'http://cp.cloudflare.com/'
+      
+  Trojan:
+    type: file
+    path: ./Trojan.yaml
+    health-check:
+      enable: true
+      interval: 60
+      lazy: false
+      url: 'http://cp.cloudflare.com/'
+      
+  Shadowsocks:
+    type: file
+    path: ./Shadowsocks.yaml
+    health-check:
+      enable: true
+      interval: 60
+      lazy: false
+      url: 'http://cp.cloudflare.com/'
+      
+
+rule-providers:
+  rule_tiktok:
+    type: http
+    behavior: domain
+    path: /rule_tiktok.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/rule_tiktok.yaml
+  
+  sosmed:
+    type: http
+    behavior: classical
+    path: /sosmed.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/sosmed.yaml
+    
+  streaming:
+    type: http
+    behavior: classical
+    path: /streaming.yaml
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/streaming.yaml
+    
+rules:
+  - RULE-SET,sosmed,SosialMedia
+  - RULE-SET,streaming,Streaming
+  - RULE-SET,rule_tiktok,DIRECT
+  - MATCH,AllProxy
+   
