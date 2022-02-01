@@ -1,0 +1,181 @@
+port: 8989
+socks-port: 1080
+mixed-port: 9090
+unified-delay: true
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  ipv6: false
+  listen: 53
+  default-nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+  enhanced-mode: fake-ip
+  fake-ip-range: 100.0.0.1/10 # or 198.18.0.1/16
+  nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+    - http://cp.cloudflare.com/dns-query
+    - tls://1.1.1.1:853
+    - dhcp://en0
+  fallback:
+  fallback-filter:
+    geoip: true
+    geoip-code: ID
+    ipcidr:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+tun:
+  enable: true
+  stack: system 
+  macOS-auto-route: true
+  macOS-auto-detect-interface: true
+  dns-hijack:
+    - tcp://1.1.1.1:53
+experimental:
+  interface-name: en0
+      
+proxy-groups:
+  - name: AllProxy
+    type: select
+    use:
+    - IDN
+    - SGR
+    - Shadowsocks
+    
+  - name: Auto All Proxy
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - IDN
+    - SGR
+    - Shadowsocks
+    
+  - name: Auto INDONESIA
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - IDN
+    
+  - name: Auto SINGAPORE
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - SGR
+    
+  - name: Auto Shadowsocks
+    type: url-test
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    tolerance: 300
+    lazy: true
+    disable-udp: false
+    use:
+    - Shadowsocks
+      
+  - name: Load Balance All Proxy
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - IDN
+    - SGR
+    - Shadowsocks
+     
+  - name: Load Balance INDONESIA
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - IDN
+    
+  - name: Load Balance SINGAPORE
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - SGR
+    
+  - name: Load Balance Shadowsocks
+    type: load-balance
+    url: 'http://cp.cloudflare.com/'
+    interval: 60
+    lazy: false
+    disable-udp: false
+    strategy: consistent-hashing # or round-robin
+    use:
+    - Shadowsocks
+
+proxy-providers:
+  IDN:
+    type: file
+    path: ./ID.yaml
+    health-check:
+      enable: true
+      interval: 60
+      lazy: false
+      url: 'http://cp.cloudflare.com/'
+      
+  SGR:
+    type: file
+    path: ./SG.yaml
+    health-check:
+      enable: true
+      interval: 60
+      lazy: false
+      url: 'http://cp.cloudflare.com/'
+      
+  Shadowsocks:
+    type: file
+    path: ./Shadowsocks.yaml
+    health-check:
+      enable: true
+      interval: 60
+      lazy: false
+      url: 'http://cp.cloudflare.com/'
+      
+rule-providers:
+  streaming:
+    behavior: classical
+    type: http
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/streaming.yaml
+    path: /streaming.yaml
+    
+  sosmed:
+    behavior: classical
+    type: http
+    url: https://raw.githubusercontent.com/gengkapakzxc/Config-Clashku/main/sosmed.yaml
+    path: /sosmed.yaml
+    
+rules:
+  - RULE-SET,streaming,Auto INDONESIA
+  - RULE-SET,sosmed,Auto SINGAPORE
+  - MATCH,AllProxy
+
+
+   
