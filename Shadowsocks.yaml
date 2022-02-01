@@ -1,23 +1,23 @@
 proxies:
 
-  - name: 💐 Raja Mitra
-    server: log.spotify.com.m247melon.kolocokro.xyz
+  - name: 💐 M247 MELON
+    server: 45.88.42.250
     port: 8091
     type: ss
     cipher: aes-256-gcm
     password: PCnnH6SQSnfoS27
     udp : true
 
-  - name: 🌷 Contabo
-    server: log.spotify.com.ovhmelon.kolocokro.xyz
+  - name: 🌷 OVH MELON
+    server: 139.99.68.10
     port: 8091
     type: ss
     cipher: aes-256-gcm
     password: PCnnH6SQSnfoS27
     udp : true
     
-  - name: 💮 OVH 1
-    server: login.spotify.com.ovhmelon.kolocokro.xyz
+  - name: 💮 OVH MELON2
+    server: 139.99.123.171
     port: 8090
     type: ss
     cipher: aes-256-gcm

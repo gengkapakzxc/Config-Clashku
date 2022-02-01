@@ -1,0 +1,48 @@
+proxies:
+  - name: INDONESIA VMESS
+    type: vmess
+    server: 104.17.3.81
+    port: 443
+    uuid: 2241a672-ec98-416f-96c1-fac1519c9d1f
+    alterId: 0
+    cipher: auto
+    udp: true
+    network: ws
+    ws-opts:
+      path: /sshocean
+      headers:
+        Host: id3.v2rayserv.com
+    tls: true
+    servername: id3.v2rayserv.com
+    skip-cert-verify: true
+
+  - name: INDONESIA VLESS
+    type: vless
+    server: 104.17.3.81
+    port: 443
+    uuid: 6edb871a-1bf5-4285-a45f-6c81b35c0798
+    # alterId: 0
+    cipher: auto
+    udp: true
+    network: ws
+    ws-opts:
+      path: /vless
+      headers:
+        Host: id1.v2vless.xyz
+    tls: true
+    servername: id1.v2vless.xyz
+    skip-cert-verify: true
+
+  - name: INDONESIA TROJAN
+    type: trojan
+    server: 104.17.3.81
+    port: 443
+    password: d7cf2950-83aa-11ec-b033-225401db9d57
+    udp: true
+    network: ws
+    ws-opts:
+      path: /fastssh
+      headers:
+        Host: id-1.tjvpn.org
+    sni: id-1.tjvpn.org
+    skip-cert-verify: true
